@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IOT Bridge Terminal</title>
+
+<style>
+
+:root {
+        --neon-blue: #00f3ff;
+        --neon-pink: #ff00ff;
+        --dark-bg: #05070d;
+}
+
+body {
+        background: var(--dark-bg);
+        color: var(--neon-blue);
+        font-family: "Courier New", monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+}
+
+/* Terminal box */
+.terminal-container {
+
+        width: 600px;
+
+        background: rgba(10,15,25,0.95);
+
+        border: 2px solid var(--neon-blue);
+
+        border-radius: 10px;
+
+        padding: 20px;
+
+        box-shadow: 0 0 20px var(--neon-blue);
+
+}
+
+/* Title */
+.title {
+
+        text-align: center;
+
+        font-size: 26px;
+
+        letter-spacing: 4px;
+
+        margin-bottom: 10px;
+
+}
+
+/* Status text */
+.status {
+
+        text-align: right;
+
+        font-size: 13px;
+
+        color: var(--neon-pink);
+
+        margin-bottom: 10px;
+
+}
+
+/* Terminal output */
+#terminal {
+
+        background: black;
+
+        height: 260px;
+
+        overflow-y: auto;
+
+        padding: 10px;
+
+        border: 1px solid #333;
+
+        margin-bottom: 10px;
+
+}
+
+/* Incoming messages */
+.msg-in {
+
+        color: #00ff88;
+
+}
+
+/* Outgoing messages */
+.msg-out {
+
+        color: #ff4444;
+
+}
+
+/* Input row */
+.input-row {
+
+        display: flex;
+
+}
+
+/* Input box */
+#commandInput {
+
+        flex: 1;
+
+        background: transparent;
+
+        border: none;
+
+        border-bottom: 2px solid var(--neon-pink);
+
+        color: white;
+
+        padding: 8px;
+
+        outline: none;
+
+}
+
+/* Send button */
+#sendBtn {
+
+        background: transparent;
+
+        border: 1px solid var(--neon-blue);
+
+        color: var(--neon-blue);
+
+        padding: 8px 15px;
+
+        cursor: pointer;
+
+}
+
+/* Connect button */
+#connectBtn {
+
+        width: 100%;
+
+        margin-top: 10px;
+
+        padding: 10px;
+
+        background: transparent;
+
+        border: 1px solid var(--neon-blue);
+
+        color: var(--neon-blue);
+
+        cursor: pointer;
+
+}
+
+#connectBtn:hover,
+#sendBtn:hover {
+
+        background: var(--neon-blue);
+
+        color: black;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="terminal-container">
+
+<div class="title">
+IOT BRIDGE
+</div>
+
+<div class="status" id="statusText">
+System Offline
+</div>
+
+<div id="terminal">
+<div class="msg-in">> READY FOR CONNECTION...</div>
+</div>
+
+<div class="input-row">
+
+<input
+id="commandInput"
+placeholder="Inject command..."
+disabled
+>
+
+<button
+id="sendBtn"
+disabled
+>
+SEND
+</button>
+
+</div>
+
+<button id="connectBtn">
+CONNECT ESP32
+</button>
+
+</div>
+
+<script src="js/ble.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,452 @@
+/* ==========================================
+   ESP32 BLE Temperature Monitor - Styles
+   Cyber-themed Terminal Interface
+   ========================================== */
+
+/* CSS Variables for easy theming */
+:root {
+    --primary-color: #00ff41;
+    --secondary-color: #0f0;
+    --background-dark: #0a0e27;
+    --terminal-bg: #1a1a2e;
+    --card-bg: #16213e;
+    --text-primary: #00ff41;
+    --text-secondary: #a8dadc;
+    --text-muted: #6c757d;
+    --error-color: #ff006e;
+    --success-color: #00ff41;
+    --warning-color: #ffd60a;
+    --border-color: #2a2f4f;
+    --shadow: 0 4px 20px rgba(0, 255, 65, 0.1);
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: linear-gradient(135deg, var(--background-dark) 0%, #1a1a2e 100%);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow);
+}
+
+header h1 {
+    color: var(--primary-color);
+    font-size: 2em;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--primary-color);
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+}
+
+/* Connection Panel */
+.connection-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: var(--card-bg);
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1em;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--error-color);
+    box-shadow: 0 0 10px var(--error-color);
+    animation: pulse 2s infinite;
+}
+
+.status-dot.connected {
+    background: var(--success-color);
+    box-shadow: 0 0 10px var(--success-color);
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Buttons */
+.btn-connect {
+    background: linear-gradient(135deg, #00ff41 0%, #00cc33 100%);
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-connect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 255, 65, 0.4);
+}
+
+.btn-connect:active {
+    transform: translateY(0);
+}
+
+.btn-connect:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Terminal Container */
+.terminal-container {
+    background: var(--terminal-bg);
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.terminal-header {
+    background: var(--card-bg);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.terminal-title {
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+.btn-clear {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 5px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em;
+    transition: all 0.2s;
+}
+
+.btn-clear:hover {
+    background: var(--border-color);
+    color: var(--primary-color);
+}
+
+.terminal-output {
+    padding: 15px;
+    height: 300px;
+    overflow-y: auto;
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/* Custom Scrollbar */
+.terminal-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: var(--terminal-bg);
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* Terminal Lines */
+.terminal-line {
+    margin-bottom: 8px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.prompt {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.text {
+    color: var(--text-secondary);
+}
+
+.error {
+    color: var(--error-color);
+}
+
+.success {
+    color: var(--success-color);
+}
+
+.warning {
+    color: var(--warning-color);
+}
+
+.timestamp {
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin-right: 5px;
+}
+
+/* Command Panel */
+.command-panel {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.quick-commands {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-command {
+    background: var(--terminal-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em;
+    transition: all 0.2s;
+}
+
+.btn-command:hover:not(:disabled) {
+    background: var(--border-color);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-command:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+}
+
+.command-input {
+    flex: 1;
+    background: var(--terminal-bg);
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+    padding: 12px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95em;
+}
+
+.command-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+}
+
+.command-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-send {
+    background: var(--primary-color);
+    color: #000;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    transition: all 0.2s;
+}
+
+.btn-send:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 65, 0.3);
+}
+
+.btn-send:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* Temperature Card */
+.temp-card {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--terminal-bg) 100%);
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid var(--border-color);
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.temp-icon {
+    font-size: 3em;
+    margin-bottom: 10px;
+}
+
+.temp-value {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 0 20px var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.temp-unit {
+    font-size: 0.6em;
+    color: var(--text-secondary);
+}
+
+.temp-label {
+    color: var(--text-secondary);
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.last-update {
+    color: var(--text-muted);
+    font-size: 0.85em;
+}
+
+/* Info Section */
+.info-section {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.info-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.info-section ol {
+    padding-left: 20px;
+}
+
+.info-section li {
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 0.85em;
+}
+
+.tech-stack {
+    color: var(--primary-color);
+    margin-top: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .connection-panel {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .quick-commands {
+        flex-direction: column;
+    }
+
+    .btn-command {
+        width: 100%;
+    }
+
+    .temp-value {
+        font-size: 2.5em;
+    }
+
+    .terminal-output {
+        height: 250px;
+        font-size: 0.85em;
+    }
+}
+
+/* Loading Animation */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.loading::after {
+    content: '▮';
+    animation: blink 1s infinite;
+}
