@@ -40,14 +40,18 @@ async function connect() {
     try {
         addTerminalLine("SYSTEM", "Opening Bluetooth chooser...", "warning");
 
+        // ✅ FIX: services inside filters so mobile Chrome can discover the UUID
         bluetoothDevice = await navigator.bluetooth.requestDevice({
-            filters: [{ name: 'ESP32_TEMP_SENSOR' }], // matches your ESP32 firmware name
+            filters: [{
+                name: 'ESP32_TEMP_SENSOR',
+                services: [SERVICE_UUID]   // ← required for mobile Chrome
+            }],
             optionalServices: [SERVICE_UUID]
         });
 
         addTerminalLine("BLE", "Selected: " + bluetoothDevice.name, "info");
 
-        // ✅ FIX: attach disconnect listener BEFORE connecting
+        // Attach disconnect listener BEFORE connecting
         bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
 
         addTerminalLine("SYSTEM", "Connecting...", "warning");
@@ -63,7 +67,7 @@ async function connect() {
         await txCharacteristic.startNotifications();
         txCharacteristic.addEventListener('characteristicvaluechanged', receiveData);
 
-        // ✅ Only mark connected AFTER everything is fully ready
+        // Only mark connected AFTER everything is fully ready
         isConnected = true;
         updateStatus(true);
         addTerminalLine("SUCCESS", "ESP32 Connected! Try: HELP", "success");
@@ -81,7 +85,7 @@ function disconnect() {
 }
 
 function onDisconnected() {
-    // ✅ FIX: short delay prevents false disconnect during BLE negotiation
+    // Delay prevents false disconnect flash during BLE negotiation
     setTimeout(() => {
         if (!bluetoothDevice?.gatt?.connected) {
             isConnected = false;
@@ -103,7 +107,7 @@ async function sendCommand() {
     try {
         const data = new TextEncoder().encode(text);
 
-        // ✅ Prefer writeWithoutResponse if available (faster for NUS)
+        // Prefer writeWithoutResponse if available (faster for NUS)
         if (rxCharacteristic.properties.writeWithoutResponse) {
             await rxCharacteristic.writeValueWithoutResponse(data);
         } else {
@@ -139,7 +143,6 @@ function updateStatus(connected) {
     }
 }
 
-// ✅ FIX: actually uses the 'type' parameter for color
 function addTerminalLine(prefix, message, type = 'info') {
     const colors = {
         success: '#00ff88',
