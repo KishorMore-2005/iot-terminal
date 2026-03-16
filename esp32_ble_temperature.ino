@@ -125,7 +125,7 @@ void loop() {
  */
 void initBLE() {
     // Create BLE Device
-    BLEDevice::init("ESP32_TEMP_SENSOR");
+    BLEDevice::init("ESP32_SENSOR");
 
     // Create BLE Server
     pServer = BLEDevice::createServer();
@@ -159,7 +159,7 @@ void initBLE() {
     pAdvertising->setMinPreferred(0x12);
     BLEDevice::startAdvertising();
 
-    Serial.println("BLE initialized. Device name: ESP32_TEMP_SENSOR");
+    Serial.println("BLE initialized. Device name: ESP32_SENSOR");
     Serial.println("Advertising started. Waiting for connection...");
 }
 
