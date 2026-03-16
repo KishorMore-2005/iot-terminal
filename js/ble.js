@@ -1,22 +1,22 @@
 const SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
-const RX_UUID      = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // browser → ESP32
-const TX_UUID      = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'; // ESP32 → browser
+const RX_UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e'; // browser → ESP32
+const TX_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e'; // ESP32 → browser
 
-let bluetoothDevice    = null;
-let rxCharacteristic   = null;
-let txCharacteristic   = null;
-let isConnected        = false;
+let bluetoothDevice = null;
+let rxCharacteristic = null;
+let txCharacteristic = null;
+let isConnected = false;
 
 let connectBtn, statusText, terminal, commandInput, sendBtn;
 
 document.addEventListener('DOMContentLoaded', initializeApp);
 
 function initializeApp() {
-    connectBtn   = document.getElementById('connectBtn');
-    statusText   = document.getElementById('statusText');
-    terminal     = document.getElementById('terminal');
+    connectBtn = document.getElementById('connectBtn');
+    statusText = document.getElementById('statusText');
+    terminal = document.getElementById('terminal');
     commandInput = document.getElementById('commandInput');
-    sendBtn      = document.getElementById('sendBtn');
+    sendBtn = document.getElementById('sendBtn');
 
     if (!navigator.bluetooth) {
         addTerminalLine("ERROR", "Web Bluetooth not supported. Use Chrome.", "error");
@@ -45,7 +45,7 @@ async function connect() {
         // because the 31-byte BLE advertising packet gets split into scan responses.
         bluetoothDevice = await navigator.bluetooth.requestDevice({
             filters: [{
-                name: 'ESP32_TEMP_SENSOR'
+                name: 'ESP32_SENSOR'
             }],
             optionalServices: [SERVICE_UUID]
         });
@@ -57,7 +57,7 @@ async function connect() {
 
         addTerminalLine("SYSTEM", "Connecting...", "warning");
 
-        const server  = await bluetoothDevice.gatt.connect();
+        const server = await bluetoothDevice.gatt.connect();
         const service = await server.getPrimaryService(SERVICE_UUID);
 
         // RX = browser writes to ESP32
@@ -133,23 +133,23 @@ function updateStatus(connected) {
         statusText.textContent = "● Connected";
         statusText.style.color = "#00ff88";
         connectBtn.textContent = "DISCONNECT";
-        commandInput.disabled  = false;
-        sendBtn.disabled       = false;
+        commandInput.disabled = false;
+        sendBtn.disabled = false;
     } else {
         statusText.textContent = "● Disconnected";
         statusText.style.color = "#ff4444";
         connectBtn.textContent = "CONNECT ESP32";
-        commandInput.disabled  = true;
-        sendBtn.disabled       = true;
+        commandInput.disabled = true;
+        sendBtn.disabled = true;
     }
 }
 
 function addTerminalLine(prefix, message, type = 'info') {
     const colors = {
         success: '#00ff88',
-        error:   '#ff4444',
+        error: '#ff4444',
         warning: '#ffaa00',
-        info:    '#00f3ff'
+        info: '#00f3ff'
     };
     const div = document.createElement("div");
     div.style.color = colors[type] || colors.info;
@@ -159,5 +159,5 @@ function addTerminalLine(prefix, message, type = 'info') {
 }
 
 function escapeHtml(str) {
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
