@@ -40,13 +40,10 @@ async function connect() {
     try {
         addTerminalLine("SYSTEM", "Opening Bluetooth chooser...", "warning");
 
-        // Relaxed filters: filter just by name, or use acceptAllDevices.
-        // Combining name + services in filters often causes the ESP32 to not show up
-        // because the 31-byte BLE advertising packet gets split into scan responses.
+        // Switch to acceptAllDevices to completely bypass name filtering
+        // and OS caching issues that cause "no compatible devices found"
         bluetoothDevice = await navigator.bluetooth.requestDevice({
-            filters: [{
-                name: 'ESP32_SENSOR'
-            }],
+            acceptAllDevices: true,
             optionalServices: [SERVICE_UUID]
         });
 
