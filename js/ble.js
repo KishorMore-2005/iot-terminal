@@ -40,11 +40,12 @@ async function connect() {
     try {
         addTerminalLine("SYSTEM", "Opening Bluetooth chooser...", "warning");
 
-        // ✅ FIX: services inside filters so mobile Chrome can discover the UUID
+        // Relaxed filters: filter just by name, or use acceptAllDevices.
+        // Combining name + services in filters often causes the ESP32 to not show up
+        // because the 31-byte BLE advertising packet gets split into scan responses.
         bluetoothDevice = await navigator.bluetooth.requestDevice({
             filters: [{
-                name: 'ESP32_TEMP_SENSOR',
-                services: [SERVICE_UUID]   // ← required for mobile Chrome
+                name: 'ESP32_TEMP_SENSOR'
             }],
             optionalServices: [SERVICE_UUID]
         });
